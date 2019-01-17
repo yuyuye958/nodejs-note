@@ -9,7 +9,7 @@ function toast(msg, time) {
 
 toast.prototype = {
   createToast() {
-    var tpl = '<div class="toast">' + this.msg + '</div>'
+    let tpl = '<div class="toast">' + this.msg + '</div>'
     this.$toast = $(tpl)
     $('body').append(this.$toast)
   },
