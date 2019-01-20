@@ -10,18 +10,29 @@ router.get('/notes', (req, res, next) => {
 })
 
 // 创建 note
-router.post('note/create', (req, res, next) => {
-
+router.post('/notes/add', (req, res, next) => {
+  Note.create({text: req.body.note}).then(() => {
+    res.send({status: 0})
+  }).catch(() => {
+    res.send({status: 1, errorMsg: '数据库发生错误'})
+  })
 })
 
 // 编辑 note
-router.post('note/edit', (req, res, next) => {
-
+router.post('/notes/edit', (req, res, next) => {
+  Note.update(
+      {text: req.body.note},
+      {where: {id: req.body.id}}
+  ).then(() => {
+    res.send({status: 0})
+  })
 })
 
 // 删除 note
-router.post('note/delete', (req, res, next) => {
-
+router.post('/notes/delete', (req, res, next) => {
+  Note.destroy({where: {id: req.body.id}}).then(() => {
+    res.send({status: 0})
+  })
 })
 
 module.exports = router
