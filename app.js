@@ -4,8 +4,13 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var bodyParser = require('body-parser');
+var passport = require('passport');
+var session = require('express-session');
+
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
+var authRouter = require('./routes/auth');
 
 var app = express();
 
@@ -19,8 +24,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(bodyParser.json());
+app.use(session({secret: 'sessionsecret'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use('/', indexRouter);
-app.use('/api', apiRouter);
+app.use('/api', apiRouter);   // 接口
+app.use('/auth', authRouter);   // auth 登录
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

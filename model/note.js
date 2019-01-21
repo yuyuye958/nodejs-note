@@ -19,8 +19,13 @@ const sequelize = new Sequelize(undefined, undefined, undefined, {
 const Note = sequelize.define('note', {
   text: {
     type: Sequelize.STRING
+  },
+  uid: {
+    type: Sequelize.STRING
   }
 })
+
+// Note.sync({force: true})
 
 // // 创建
 // // force: true will drop the table if it already exists
